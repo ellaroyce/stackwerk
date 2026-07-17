@@ -422,13 +422,12 @@ a:focus-visible, button:focus-visible, [tabindex]:focus-visible, input:focus-vis
 .health { display: flex; flex-direction: column; gap: 8px; }
 .meter-row { display: grid; grid-template-columns: 78px 1fr 26px; align-items: center; gap: 9px; }
 .meter-label { font-size: 11px; color: var(--ink-2); font-weight: 500; }
-.meter-track { height: 6px; background: var(--surface-2); border-radius: 4px; overflow: hidden; }
-.meter-fill { height: 100%; border-radius: 4px; transition: width .4s cubic-bezier(.2,.8,.3,1); }
+.meter-track { display: block; height: 6px; background: var(--surface-2); border: 1px solid var(--border); border-radius: 4px; overflow: hidden; }
+.meter-fill { display: block; height: 100%; border-radius: 4px; background: var(--accent); transition: width .4s cubic-bezier(.2,.8,.3,1); }
 .meter-val { font-size: 10.5px; font-family: var(--font-mono); color: var(--ink-3); text-align: right; }
-.lvl-none { background: var(--border-strong); }
-.lvl-low { background: var(--g-red); }
-.lvl-mid { background: var(--g-yellow); }
-.lvl-high { background: var(--g-green); }
+.meter-fill.lvl-none { background: transparent; }
+.meter-fill.lvl-on { background: var(--accent); }
+.meter-fill.lvl-full { background: var(--lime); }
 
 .warn {
   display: flex; gap: 8px; align-items: flex-start; padding: 9px 11px; border-radius: var(--r-md);

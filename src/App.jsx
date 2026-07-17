@@ -13,10 +13,7 @@ import {
 // -------------------------------------------------------------------------
 function levelClass(v, max) {
   if (v <= 0) return 'lvl-none';
-  const r = v / max;
-  if (r < 0.34) return 'lvl-low';
-  if (r < 0.67) return 'lvl-mid';
-  return 'lvl-high';
+  return v >= max ? 'lvl-full' : 'lvl-on';
 }
 
 function computeHealth(ids) {
@@ -609,7 +606,9 @@ function BriefPanel({ customer, industry, pain, blocks, derived, health, activeS
             {SIGNAL_KEYS.map((k) => (
               <div className="meter-row" key={k}>
                 <span className="meter-label">{SIGNAL_LABELS[k]}</span>
-                <span className="meter-track">
+                <span className="meter-track" role="meter" aria-valuenow={health.pct[k]}
+                  aria-valuemin={0} aria-valuemax={100}
+                  aria-label={`${SIGNAL_LABELS[k]} ${health.pct[k]} percent`}>
                   <span className={`meter-fill ${levelClass(health.pct[k], 100)}`}
                     style={{ width: `${health.pct[k]}%` }} data-testid={`meter-${k}`} />
                 </span>
