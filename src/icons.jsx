@@ -44,7 +44,7 @@ export const IconBuild = (p) => (
 // Brand logo — network-node cluster (Pruna Secura technical motif). Central hub
 // linked to orbiting nodes; calm, precise, no gradients. Scales via viewBox.
 export const Logo = ({ size = 30 }) => (
-  <svg className="brand-logo" width={size} height={size} viewBox="0 0 32 32" fill="none" role="img" aria-label="Stackwerk logo">
+  <svg className="brand-logo" width={size} height={size} viewBox="0 0 32 32" fill="none" role="img" aria-label="Interactive GCP Pursuit Builder logo">
     <g stroke="currentColor" strokeWidth="1.4" opacity="0.5">
       <path d="M16 16 6 7M16 16l10-9M16 16 7 25M16 16l9 9M16 16V4" />
     </g>

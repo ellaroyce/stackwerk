@@ -1,4 +1,4 @@
-/* Stackwerk — Pruna Secura brand system.
+/* Interactive GCP Pursuit Builder — Pruna Secura brand system.
    Deep navy, warm off-white ink, electric blue, sparing lime. Calm technical
    security interface: thin blue/slate borders, mono technical labels, no gradients. */
 
@@ -380,6 +380,15 @@ a:focus-visible, button:focus-visible, [tabindex]:focus-visible, input:focus-vis
 }
 .brief-cust-name { font-size: 15px; font-weight: 700; }
 .brief-narrative { font-size: 12.5px; color: var(--ink-2); line-height: 1.5; }
+
+.source-list { margin: 6px 0 0; padding-left: 16px; display: flex; flex-direction: column; gap: 4px; }
+.source-list li { font-size: 12px; line-height: 1.4; }
+.source-list a { color: var(--accent); text-decoration: none; word-break: break-word; }
+.source-list a:hover { text-decoration: underline; }
+.brief-hypothesis {
+  margin-top: 6px; font-size: 12px; line-height: 1.45; color: var(--ink-3);
+  border-left: 2px solid var(--g-yellow); padding-left: 8px; font-style: italic;
+}
 
 .pill-list { display: flex; flex-wrap: wrap; gap: 5px; }
 .pill {

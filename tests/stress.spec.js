@@ -1,4 +1,4 @@
-// Stackwerk stress test.
+// Interactive GCP Pursuit Builder stress test.
 // Cycles presets, customers, pains, theme toggles, block add/remove, library
 // expand/collapse, brief copy/download and mobile nav across four viewports,
 // while asserting: no uncaught page errors, no console errors, no React
@@ -8,16 +8,17 @@
 import { test, expect } from '@playwright/test';
 
 const PAINS = Array.from({ length: 14 }, (_, i) => `p${i + 1}`);
-const PRESETS = ['fsi-sovereign-genai', 'auto-mfg-sap', 'retail-productivity'];
-// Generic industry archetypes (anonymized — no real customer accounts).
+const PRESETS = ['db-sovereign-genai', 'bmw-mfg-sap', 'schwarz-retail-productivity'];
+// Named DACH accounts (OSINT/AI-assisted; see per-account sources in the brief).
 const CUSTOMERS = [
-  'fsi-global-bank', 'fsi-retail-bank', 'insurance-global-insurer', 'auto-premium-oem',
-  'auto-luxury-oem', 'auto-volume-oem', 'pharma-life-sciences', 'chem-global-chemicals',
-  'industrial-conglomerate', 'aviation-flag-carrier', 'logistics-postal-group',
-  'industrial-supplier', 'retail-discount-group', 'retail-ecommerce-group',
-  'retail-grocery-coop', 'energy-utility', 'semi-manufacturer', 'capmkts-exchange',
-  'healthcare-provider', 'pharma-science-tech', 'public-rail-operator', 'public-federal-gov',
+  'deutsche-bank', 'commerzbank', 'allianz', 'bmw', 'mercedes', 'volkswagen',
+  'bayer', 'basf', 'siemens', 'lufthansa', 'dhl', 'bosch', 'schwarz', 'otto',
+  'rewe', 'eon', 'infineon', 'deutsche-boerse', 'fresenius', 'merck',
+  'deutsche-bahn', 'fed-gov',
 ];
+// Accounts with a cited public source vs. accounts labelled AI-assisted hypotheses.
+const SOURCED_CUSTOMER = 'deutsche-bank';
+const HYPOTHESIS_CUSTOMER = 'bosch';
 
 const VIEWPORTS = [
   { name: 'desktop-1440', width: 1440, height: 900, mobile: false },
@@ -54,7 +55,7 @@ function isMobileLayout(width) {
   return width <= 900;
 }
 
-test.describe('Stackwerk stress', () => {
+test.describe('Interactive GCP Pursuit Builder stress', () => {
   for (const vp of VIEWPORTS) {
     test(`viewport ${vp.name}`, async ({ page }) => {
       const { consoleErrors, pageErrors } = attachListeners(page);
@@ -70,6 +71,8 @@ test.describe('Stackwerk stress', () => {
       await expect(methodology).toHaveText('Based on OSINT and AI-assisted research.');
       await expect(page.getByTestId('independence-disclaimer'))
         .toHaveText('Independent portfolio project. Not affiliated with or endorsed by Google LLC.');
+      // exact product name
+      await expect(page.locator('.brand-name')).toHaveText('Interactive GCP Pursuit Builder');
 
       const mobile = isMobileLayout(vp.width);
 
@@ -108,7 +111,7 @@ test.describe('Stackwerk stress', () => {
 
       // ---- 4. All 14 pains for a fixed customer ----
       await showStep('setup');
-      const anchorCust = page.getByTestId('customer-fsi-global-bank');
+      const anchorCust = page.getByTestId('customer-deutsche-bank');
       await anchorCust.scrollIntoViewIfNeeded();
       await anchorCust.click();
 
@@ -157,13 +160,24 @@ test.describe('Stackwerk stress', () => {
       }
 
       // ---- 5b. Pursuit brief scrolls independently (desktop/laptop) ----
-      // fsi-global-bank + all pains above leave a rich brief (health → phases).
+      // deutsche-bank + all pains above leave a rich brief (health → phases).
       await showStep('brief');
       const brief = page.getByTestId('brief-body');
       await expect(brief).toBeVisible();
       // stack-health (top) and phases (bottom) must both exist
       await expect(page.getByTestId('health-meters')).toBeVisible();
       await expect(page.getByTestId('brief-phases')).toHaveCount(1);
+
+      // ---- 5c. Sources & methodology: sourced account cites public URLs ----
+      // deutsche-bank has cited sources, so the brief shows a source list (no hypothesis note).
+      const sources = page.getByTestId('brief-sources');
+      await sources.scrollIntoViewIfNeeded();
+      await expect(page.getByTestId('brief-methodology'))
+        .toHaveText('Based on OSINT and AI-assisted research.');
+      await expect(page.getByTestId('brief-source-list')).toBeVisible();
+      await expect(page.getByTestId('brief-source-list').locator('a').first())
+        .toHaveAttribute('href', /^https?:\/\//);
+      await expect(page.getByTestId('brief-hypothesis')).toHaveCount(0);
 
       if (!mobile) {
         const briefColHead = page.getByTestId('col-brief').locator('.col-head').first();
@@ -248,19 +262,31 @@ test.describe('Stackwerk stress', () => {
       await page.getByTestId('button-download-brief').click();
       const download = await downloadPromise;
       if (download) {
-        expect(download.suggestedFilename()).toMatch(/^stackwerk-brief-.*\.md$/);
+        expect(download.suggestedFilename()).toMatch(/^gcp-pursuit-brief-.*\.md$/);
       }
 
       // ---- 8. Sovereignty warning path (regulated + no sovereignty) ----
       await showStep('setup');
       await anchorCust.scrollIntoViewIfNeeded();
-      await anchorCust.click(); // fsi-global-bank = FSI (regulated)
+      await anchorCust.click(); // deutsche-bank = FSI (regulated)
       await showStep('brief');
       const sovWarn = page.getByTestId('warn-sovereignty');
       if (await sovWarn.count() > 0 && await sovWarn.isVisible()) {
         await page.getByTestId('button-add-sovereignty').click();
         await expect(sovWarn).toHaveCount(0);
       }
+
+      // ---- 8b. Unsourced account is labelled an AI-assisted hypothesis ----
+      await showStep('setup');
+      const hypCust = page.getByTestId(`customer-${HYPOTHESIS_CUSTOMER}`);
+      await hypCust.scrollIntoViewIfNeeded();
+      await hypCust.click();
+      await showStep('brief');
+      await page.getByTestId('brief-sources').scrollIntoViewIfNeeded();
+      await expect(page.getByTestId('brief-hypothesis')).toBeVisible();
+      await expect(page.getByTestId('brief-hypothesis'))
+        .toContainText('require verification');
+      await expect(page.getByTestId('brief-source-list')).toHaveCount(0);
 
       // ---- 9. Reset ----
       await page.getByTestId('button-reset').click();

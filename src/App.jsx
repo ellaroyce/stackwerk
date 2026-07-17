@@ -190,7 +190,7 @@ export default function App() {
         <div className="brand">
           <Logo size={30} />
           <div className="brand-text">
-            <span className="brand-name">Stackwerk</span>
+            <span className="brand-name">Interactive GCP Pursuit Builder</span>
             <span className="brand-sub">Turns customer pain into a buildable Google Cloud pursuit</span>
           </div>
         </div>
@@ -331,7 +331,7 @@ export default function App() {
               <div className="empty-canvas" data-testid="empty-builder">
                 <Logo size={54} />
                 <h3>Start by choosing a context and a pain point</h3>
-                <p>Stackwerk assembles the recommended Google Cloud stack as interlocking blocks — Foundation, Core, Intelligence, Experience and Governance — then writes the pursuit brief for you.</p>
+                <p>The builder assembles the recommended Google Cloud stack as interlocking blocks — Foundation, Core, Intelligence, Experience and Governance — then writes the pursuit brief for you.</p>
               </div>
             ) : (
               LAYERS.map((layer) => {
@@ -506,8 +506,8 @@ function BriefPanel({ customer, industry, pain, blocks, derived, health, activeS
 
   function buildBriefText() {
     const L = [];
-    L.push('STACKWERK — GOOGLE CLOUD PURSUIT BRIEF');
-    L.push('='.repeat(42));
+    L.push('INTERACTIVE GCP PURSUIT BUILDER — PURSUIT BRIEF');
+    L.push('='.repeat(48));
     L.push('');
     L.push(`Context:      ${contextName || '—'}`);
     if (customer) {
@@ -544,9 +544,19 @@ function BriefPanel({ customer, industry, pain, blocks, derived, health, activeS
     }
     L.push(''); L.push('STAGED PURSUIT'); L.push('-'.repeat(42));
     phases.forEach((ph) => { L.push(`  ${ph.phase}`); L.push(`    ${ph.detail}`); });
-    L.push(''); L.push('—'.repeat(21));
+    L.push(''); L.push('SOURCES & METHODOLOGY'); L.push('-'.repeat(42));
+    L.push('Based on OSINT and AI-assisted research.');
+    if (customer) {
+      if (customer.sources && customer.sources.length) {
+        L.push(`Public sources for ${customer.name}:`);
+        customer.sources.forEach((s) => L.push(`  • ${s.label} — ${s.url}`));
+      } else {
+        L.push(`No public source on file for ${customer.name} — the footprint and pursuit`);
+        L.push('  angle above are AI-assisted hypotheses that require verification.');
+      }
+    }
+    L.push(''); L.push('—'.repeat(24));
     L.push('Independent portfolio project. Not affiliated with or endorsed by Google LLC.');
-    L.push('Based on OSINT and AI-assisted research. Customer entries are generic archetypes, not real accounts.');
     return L.join('\n');
   }
 
@@ -562,7 +572,7 @@ function BriefPanel({ customer, industry, pain, blocks, derived, health, activeS
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     const slug = (contextName || 'pursuit').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
-    a.href = url; a.download = `stackwerk-brief-${slug}.md`;
+    a.href = url; a.download = `gcp-pursuit-brief-${slug}.md`;
     document.body.appendChild(a); a.click(); document.body.removeChild(a);
     URL.revokeObjectURL(url);
   }
@@ -575,7 +585,7 @@ function BriefPanel({ customer, industry, pain, blocks, derived, health, activeS
           <p className="col-hint">Auto-writes as you build.</p>
         </div>
         <div className="brief-body">
-          <p className="col-hint">Select a context and pain point, and Stackwerk drafts the customer narrative, core stack, substitutions, compliance signals and staged pursuit here.</p>
+          <p className="col-hint">Select a context and pain point, and the builder drafts the customer narrative, core stack, substitutions, compliance signals and staged pursuit here.</p>
         </div>
       </>
     );
@@ -700,6 +710,27 @@ function BriefPanel({ customer, industry, pain, blocks, derived, health, activeS
               </div>
             ))}
           </div>
+        </div>
+
+        {/* Sources & methodology */}
+        <div className="brief-block" data-testid="brief-sources">
+          <div className="brief-h">Sources &amp; methodology</div>
+          <p className="brief-narrative" data-testid="brief-methodology">Based on OSINT and AI-assisted research.</p>
+          {customer && (customer.sources && customer.sources.length ? (
+            <ul className="source-list" data-testid="brief-source-list">
+              {customer.sources.map((s, i) => (
+                <li key={i}>
+                  <a href={s.url} target="_blank" rel="noopener noreferrer"
+                    data-testid={`source-link-${i}`}>{s.label}</a>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p className="brief-hypothesis" data-testid="brief-hypothesis">
+              No public source on file for {customer.name} — the footprint and pursuit angle
+              above are AI-assisted hypotheses that require verification.
+            </p>
+          ))}
         </div>
       </div>
 
