@@ -144,6 +144,54 @@ test.describe('Stackwerk stress', () => {
         expect(gap, `excessive gap (${gap}px) between last block and add-on library`).toBeLessThan(320);
       }
 
+      // ---- 5b. Pursuit brief scrolls independently (desktop/laptop) ----
+      // deutsche-bank + all pains above leave a rich brief (health → phases).
+      await showStep('brief');
+      const brief = page.getByTestId('brief-body');
+      await expect(brief).toBeVisible();
+      // stack-health (top) and phases (bottom) must both exist
+      await expect(page.getByTestId('health-meters')).toBeVisible();
+      await expect(page.getByTestId('brief-phases')).toHaveCount(1);
+
+      if (!mobile) {
+        const briefColHead = page.getByTestId('col-brief').locator('.col-head').first();
+        const headBefore = await briefColHead.boundingBox();
+
+        const m = await brief.evaluate((el) => ({
+          scrollH: el.scrollHeight,
+          clientH: el.clientHeight,
+          overflowY: getComputedStyle(el).overflowY,
+        }));
+        expect(m.overflowY, 'brief body should be its own scroll region').toMatch(/auto|scroll/);
+        // brief body is bounded to the viewport, not the full page
+        expect(m.clientH, 'brief body should fit within the viewport height')
+          .toBeLessThanOrEqual(vp.height);
+        expect(m.scrollH, 'brief content should exceed its bounded height (scroll needed)')
+          .toBeGreaterThan(m.clientH);
+
+        // the whole page must NOT scroll — only the brief body does
+        const pageScrolls = await page.evaluate(() =>
+          document.documentElement.scrollHeight > document.documentElement.clientHeight + 1);
+        expect(pageScrolls, 'page itself should not scroll on desktop/laptop').toBeFalsy();
+
+        // scroll the brief to the bottom; header stays put, last section reachable
+        await brief.evaluate((el) => { el.scrollTop = el.scrollHeight; });
+        const scrolled = await brief.evaluate((el) => el.scrollTop);
+        expect(scrolled, 'brief body should actually scroll').toBeGreaterThan(0);
+        await expect(page.getByTestId('brief-phases')).toBeVisible();
+
+        const headAfter = await briefColHead.boundingBox();
+        expect(Math.abs(headAfter.y - headBefore.y), 'brief header should stay fixed while content scrolls')
+          .toBeLessThanOrEqual(1);
+
+        // reset brief scroll for subsequent steps
+        await brief.evaluate((el) => { el.scrollTop = 0; });
+      } else {
+        // mobile: brief must remain reachable (bottom section scrollable into view)
+        await page.getByTestId('brief-phases').scrollIntoViewIfNeeded();
+        await expect(page.getByTestId('brief-phases')).toBeVisible();
+      }
+
       // ---- 6. Block add/remove churn from the library ----
       await showStep('build');
       await page.getByTestId('button-toggle-library').click(); // collapse

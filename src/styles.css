@@ -92,6 +92,12 @@ a:focus-visible, button:focus-visible, [tabindex]:focus-visible, input:focus-vis
 
 /* ---------------- App shell ---------------- */
 .app { display: flex; flex-direction: column; min-height: 100vh; }
+/* On desktop/laptop bound the shell to the viewport so each column (setup,
+   builder, brief) owns a bounded internal scroll instead of the whole page
+   scrolling. Mobile keeps natural single-column page flow (see max-width:900). */
+@media (min-width: 901px) {
+  .app { height: 100vh; min-height: 0; overflow: hidden; }
+}
 
 .topbar {
   display: flex; align-items: center; gap: 14px;
