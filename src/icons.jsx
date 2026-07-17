@@ -41,14 +41,18 @@ export const IconBuild = (p) => (
   <svg width="18" height="18" viewBox="0 0 24 24" {...s} {...p}><rect x="3" y="13" width="8" height="7" rx="1" /><rect x="13" y="13" width="8" height="7" rx="1" /><rect x="8" y="4" width="8" height="7" rx="1" /></svg>
 );
 
-// Brand logo — stacked interlocking blocks. Scales via viewBox.
+// Brand logo — network-node cluster (Pruna Secura technical motif). Central hub
+// linked to orbiting nodes; calm, precise, no gradients. Scales via viewBox.
 export const Logo = ({ size = 30 }) => (
   <svg className="brand-logo" width={size} height={size} viewBox="0 0 32 32" fill="none" role="img" aria-label="Stackwerk logo">
-    <rect x="4" y="19" width="24" height="7" rx="2" fill="currentColor" />
-    <rect x="7" y="11" width="18" height="7" rx="2" fill="currentColor" opacity="0.72" />
-    <rect x="10" y="4" width="12" height="6" rx="1.8" fill="currentColor" opacity="0.5" />
-    <circle cx="10" cy="18.5" r="1.3" fill="var(--bg)" />
-    <circle cx="16" cy="18.5" r="1.3" fill="var(--bg)" />
-    <circle cx="22" cy="18.5" r="1.3" fill="var(--bg)" />
+    <g stroke="currentColor" strokeWidth="1.4" opacity="0.5">
+      <path d="M16 16 6 7M16 16l10-9M16 16 7 25M16 16l9 9M16 16V4" />
+    </g>
+    <circle cx="16" cy="16" r="3.4" fill="currentColor" />
+    <circle cx="6" cy="7" r="2" fill="currentColor" opacity="0.85" />
+    <circle cx="26" cy="7" r="2" fill="currentColor" opacity="0.85" />
+    <circle cx="7" cy="25" r="2" fill="currentColor" opacity="0.85" />
+    <circle cx="25" cy="25" r="2" fill="currentColor" opacity="0.85" />
+    <circle cx="16" cy="4" r="1.6" fill="currentColor" opacity="0.7" />
   </svg>
 );

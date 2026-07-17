@@ -58,9 +58,9 @@ function orderedPains(industry, query) {
 
 // -------------------------------------------------------------------------
 function useTheme() {
-  const prefersDark = typeof window !== 'undefined' &&
-    window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-  const [dark, setDark] = useState(prefersDark);
+  // Dark-first: the navy Pruna Secura identity is the primary brand, so the app
+  // opens dark by default. Users can switch to the warm light theme via the toggle.
+  const [dark, setDark] = useState(true);
   useEffect(() => {
     document.documentElement.classList.toggle('dark', dark);
     document.documentElement.classList.toggle('light', !dark);
