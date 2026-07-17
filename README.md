@@ -30,6 +30,19 @@ The base path is configured per-build rather than globally:
 - `npm run build:pages` passes `--base=/stackwerk/` so assets resolve correctly
   under the GitHub Pages project subpath.
 
+## Stress / regression test
+
+An automated Playwright stress test lives in `tests/stress.spec.js`. It cycles
+all presets, all 22 customers, all 14 pain points, rapid theme toggles, repeated
+block add/remove, library expand/collapse, brief copy/download, and mobile nav
+across four viewports (1440×900, 1280×720, 768×1024, 390×844), asserting no
+uncaught/console/React-key errors, no horizontal overflow, that the pain list is
+bounded and scrollable, and that the add-on library sits close to the block stack.
+
+```bash
+npm run test:stress
+```
+
 ## GitHub Pages deployment
 
 Deployed automatically via `.github/workflows/deploy-pages.yml` on pushes to

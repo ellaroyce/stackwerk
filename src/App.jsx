@@ -293,7 +293,7 @@ export default function App() {
                 value={painQuery} onChange={(e) => setPainQuery(e.target.value)}
                 disabled={!contextChosen} />
             </div>
-            <div className="pick-list" data-testid="list-pains">
+            <div className="pick-list pain-scroll" data-testid="list-pains">
               {painList.map((p) => {
                 const suggested = activeIndustry && p.industries.includes(activeIndustry);
                 return (
@@ -325,6 +325,7 @@ export default function App() {
             </p>
           </div>
 
+          <div className="builder-scroll" data-testid="builder-scroll">
           <div className="builder-body">
             {!pain ? (
               <div className="empty-canvas" data-testid="empty-builder">
@@ -371,6 +372,7 @@ export default function App() {
               )}
             </div>
           )}
+          </div>
         </main>
 
         {/* ===== Column 3: Brief ===== */}
