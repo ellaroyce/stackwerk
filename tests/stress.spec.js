@@ -8,12 +8,15 @@
 import { test, expect } from '@playwright/test';
 
 const PAINS = Array.from({ length: 14 }, (_, i) => `p${i + 1}`);
-const PRESETS = ['db-sovereign-genai', 'bmw-mfg-sap', 'schwarz-retail-productivity'];
+const PRESETS = ['fsi-sovereign-genai', 'auto-mfg-sap', 'retail-productivity'];
+// Generic industry archetypes (anonymized — no real customer accounts).
 const CUSTOMERS = [
-  'deutsche-bank', 'commerzbank', 'allianz', 'bmw', 'mercedes', 'volkswagen',
-  'bayer', 'basf', 'siemens', 'lufthansa', 'dhl', 'bosch', 'schwarz', 'otto',
-  'rewe', 'eon', 'infineon', 'deutsche-boerse', 'fresenius', 'merck',
-  'deutsche-bahn', 'fed-gov',
+  'fsi-global-bank', 'fsi-retail-bank', 'insurance-global-insurer', 'auto-premium-oem',
+  'auto-luxury-oem', 'auto-volume-oem', 'pharma-life-sciences', 'chem-global-chemicals',
+  'industrial-conglomerate', 'aviation-flag-carrier', 'logistics-postal-group',
+  'industrial-supplier', 'retail-discount-group', 'retail-ecommerce-group',
+  'retail-grocery-coop', 'energy-utility', 'semi-manufacturer', 'capmkts-exchange',
+  'healthcare-provider', 'pharma-science-tech', 'public-rail-operator', 'public-federal-gov',
 ];
 
 const VIEWPORTS = [
@@ -59,6 +62,15 @@ test.describe('Stackwerk stress', () => {
       await page.goto('/');
       await expect(page.getByTestId('button-theme-toggle')).toBeVisible();
 
+      // ---- 0. Compliance: independence disclaimer + OSINT methodology note ----
+      // The methodology sentence must be rendered (visible footer text), and the
+      // exact independence disclaimer must be present alongside it.
+      const methodology = page.getByTestId('methodology-note');
+      await expect(methodology).toBeVisible();
+      await expect(methodology).toHaveText('Based on OSINT and AI-assisted research.');
+      await expect(page.getByTestId('independence-disclaimer'))
+        .toHaveText('Independent portfolio project. Not affiliated with or endorsed by Google LLC.');
+
       const mobile = isMobileLayout(vp.width);
 
       // helper: on mobile, switch step panels via bottom nav
@@ -96,7 +108,7 @@ test.describe('Stackwerk stress', () => {
 
       // ---- 4. All 14 pains for a fixed customer ----
       await showStep('setup');
-      const anchorCust = page.getByTestId('customer-deutsche-bank');
+      const anchorCust = page.getByTestId('customer-fsi-global-bank');
       await anchorCust.scrollIntoViewIfNeeded();
       await anchorCust.click();
 
@@ -145,7 +157,7 @@ test.describe('Stackwerk stress', () => {
       }
 
       // ---- 5b. Pursuit brief scrolls independently (desktop/laptop) ----
-      // deutsche-bank + all pains above leave a rich brief (health → phases).
+      // fsi-global-bank + all pains above leave a rich brief (health → phases).
       await showStep('brief');
       const brief = page.getByTestId('brief-body');
       await expect(brief).toBeVisible();
@@ -242,7 +254,7 @@ test.describe('Stackwerk stress', () => {
       // ---- 8. Sovereignty warning path (regulated + no sovereignty) ----
       await showStep('setup');
       await anchorCust.scrollIntoViewIfNeeded();
-      await anchorCust.click(); // deutsche-bank = FSI (regulated)
+      await anchorCust.click(); // fsi-global-bank = FSI (regulated)
       await showStep('brief');
       const sovWarn = page.getByTestId('warn-sovereignty');
       if (await sovWarn.count() > 0 && await sovWarn.isVisible()) {

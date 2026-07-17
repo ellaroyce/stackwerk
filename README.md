@@ -2,7 +2,15 @@
 
 A static React 18 + Vite 5 app that turns DACH customer pain points into a buildable
 Google Cloud pursuit — assemble compatible solution blocks into a sales-ready stack.
-No backend; the app and its supplied catalog data are fully static and public.
+No backend; the app and its catalog data are fully static and public.
+
+## About & methodology
+
+Independent portfolio project. Not affiliated with or endorsed by Google LLC.
+Based on OSINT and AI-assisted research. The catalog and the customer entries are
+**generic industry archetypes** (e.g. "Global Investment Bank", "Premium Automotive
+OEM"), not real accounts — the content is illustrative and not authoritative, and
+does not represent confidential or private customer information.
 
 ## Local development
 
@@ -33,7 +41,7 @@ The base path is configured per-build rather than globally:
 ## Stress / regression test
 
 An automated Playwright stress test lives in `tests/stress.spec.js`. It cycles
-all presets, all 22 customers, all 14 pain points, rapid theme toggles, repeated
+all presets, all 22 customer archetypes, all 14 pain points, rapid theme toggles, repeated
 block add/remove, library expand/collapse, brief copy/download, and mobile nav
 across four viewports (1440×900, 1280×720, 768×1024, 390×844), asserting no
 uncaught/console/React-key errors, no horizontal overflow, that the pain list is

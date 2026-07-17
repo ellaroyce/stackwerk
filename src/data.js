@@ -1,5 +1,7 @@
-// Curated dataset distilled from the supplied GCP solutions catalog and DACH mapping matrix.
-// All content is grounded in those two documents. No pricing or ungrounded claims added.
+// Illustrative GCP solutions dataset for the pursuit constructor.
+// Compiled from public product information and OSINT plus AI-assisted research.
+// Customer entries are generic industry archetypes, not real accounts; content is
+// illustrative and not authoritative. No pricing or private-account claims.
 
 // ---------------------------------------------------------------------------
 // LAYERS — ordered assembly tiers for the block workspace
@@ -104,7 +106,7 @@ export const SIGNAL_LABELS = {
 };
 
 // ---------------------------------------------------------------------------
-// SUBSTITUTIONS — competitor product → GCP replacement (matrix D2 + inline)
+// SUBSTITUTIONS — competitor product → GCP replacement (illustrative)
 // ---------------------------------------------------------------------------
 export const SUBSTITUTIONS = [
   { competitor: 'Snowflake',            gcp: 'bigquery',        vendor: 'Snowflake' },
@@ -265,7 +267,7 @@ export const PAINS = [
     industries: ['Automotive', 'Industrial', 'Semiconductors', 'Chemicals'],
     core: ['mfg_data_engine', 'anthos', 'vertex_vision', 'bigquery'],
     addons: ['pubsub', 'looker'],
-    subs: ['AWS SiteWise', 'Azure IoT + Siemens MindSphere'],
+    subs: ['AWS SiteWise', 'Azure IoT + industrial IoT platform'],
     narrative: 'Free OT data with Manufacturing Data Engine, run inference at the edge on Anthos with Vertex AI Vision, and analyze in BigQuery — adding Pub/Sub streaming and Looker OEE dashboards.',
   },
   {
@@ -291,30 +293,32 @@ export const PAINS = [
 ];
 
 // ---------------------------------------------------------------------------
-// CUSTOMERS — Sections A & B. status: existing | expansion | prospect
-// footprint = current posture. plAngle = Pursuit Lead angle.
-// pains[] = ordered pain ids most relevant. custom mappings supplied via `stacks`
-// which override master pain stacks where a customer-specific stack exists.
+// CUSTOMERS — generic industry archetypes (NOT real accounts). status: existing |
+// expansion | prospect models a hypothetical adoption posture for the archetype.
+// footprint = illustrative current posture. plAngle = illustrative pursuit angle.
+// pains[] = ordered pain ids most relevant. Per-archetype `stacks` override the
+// master pain stacks where an archetype-specific stack exists. All content is
+// illustrative OSINT/AI-assisted research — no real customer information.
 // ---------------------------------------------------------------------------
 export const CUSTOMERS = [
   {
-    id: 'deutsche-bank', name: 'Deutsche Bank', industry: 'FSI', hq: 'Frankfurt',
+    id: 'fsi-global-bank', name: 'Global Investment Bank', industry: 'FSI', hq: 'DACH',
     status: 'existing', expansion: true,
-    footprint: '260+ apps on GCP, GDC for Autobahn FX',
-    plAngle: 'Trusted for latency-critical FX — expand into post-trade analytics (BigQuery + Cortex), wealth AI agents (Agentspace) and gradual core-banking modernization (AlloyDB).',
+    footprint: 'Large GCP app estate; sovereign infra for latency-critical trading',
+    plAngle: 'Trusted for latency-critical workloads — expand into post-trade analytics (BigQuery + Cortex), wealth AI agents (Agentspace) and gradual core-banking modernization (AlloyDB).',
     pains: ['p4', 'p2', 'p14', 'p1'],
     stacks: {
-      p4: { core: ['gdc', 'cloud_interconnect', 'confidential'], addons: ['vertex_ai', 'bigquery', 'mandiant'], subs: ['On-prem Equinix colos', 'Internal HPC'] },
+      p4: { core: ['gdc', 'cloud_interconnect', 'confidential'], addons: ['vertex_ai', 'bigquery', 'mandiant'], subs: ['On-prem colos', 'Internal HPC'] },
       p2: { core: ['vertex_ai', 'gemini_ent', 'agentspace', 'bigquery'], addons: ['document_ai', 'contact_center', 'cortex'], subs: ['Azure OpenAI', 'AWS Bedrock'] },
       p14:{ core: ['assured', 'bsi_c5', 'audit_logs', 'sovereign_ctrl'], addons: ['chronicle'], subs: ['Manual GRC tooling', 'Azure compliance'] },
-      p1: { core: ['alloydb', 'spanner', 'gke'], addons: ['dms', 'datastream'], subs: ['Oracle Exadata', 'IBM mainframes'] },
+      p1: { core: ['alloydb', 'spanner', 'gke'], addons: ['dms', 'datastream'], subs: ['Oracle Exadata', 'Mainframes'] },
     },
   },
   {
-    id: 'commerzbank', name: 'Commerzbank', industry: 'FSI', hq: 'Frankfurt',
+    id: 'fsi-retail-bank', name: 'National Retail Bank', industry: 'FSI', hq: 'DACH',
     status: 'existing', expansion: true,
-    footprint: 'Multi-cloud migration, Digitale Kontoanalyse on GCP',
-    plAngle: '“Automate the boring, accelerate the new” — expand into AI retail banking (Gemini in branches) and SAP-on-GCP for the finance core.',
+    footprint: 'Multi-cloud migration; digital account analytics on GCP',
+    plAngle: 'Automate the routine, accelerate the new — expand into AI retail banking (Gemini in branches) and SAP-on-GCP for the finance core.',
     pains: ['p1', 'p11', 'p13'],
     stacks: {
       p1: { core: ['gke', 'cloud_sql', 'anthos'], addons: ['vertex_ai'], subs: ['Azure with M365 lock-in'] },
@@ -323,35 +327,35 @@ export const CUSTOMERS = [
     },
   },
   {
-    id: 'allianz', name: 'Allianz / Munich Re', industry: 'Insurance', hq: 'Munich',
+    id: 'insurance-global-insurer', name: 'Global Insurance Group', industry: 'Insurance', hq: 'DACH',
     status: 'existing', expansion: true,
-    footprint: 'Cloud Protection+ cyber insurance, Google Maps for MIDAS',
-    plAngle: 'Cloud Protection+ opened the door. Expand into claims automation (Document AI + agents), embedded insurance APIs (Apigee) and ESG/climate analytics (Earth Engine + BigQuery).',
+    footprint: 'Cyber-insurance partnership; geospatial risk on Maps Platform',
+    plAngle: 'A security/insurance partnership opened the door. Expand into claims automation (Document AI + agents), embedded insurance APIs (Apigee) and ESG/climate analytics (Earth Engine + BigQuery).',
     pains: ['p3', 'p2', 'p10'],
     stacks: {
       p3: { core: ['bigquery', 'vertex_ai', 'mandiant'], addons: ['looker', 'agentspace'], subs: ['Internal actuarial tooling', 'Snowflake'] },
       p2: { core: ['bigquery', 'vertex_ai', 'earth_engine'], addons: ['maps', 'gemini_ent'], subs: ['AWS climate stack', 'Microsoft Planetary Computer'] },
-      p10:{ core: ['document_ai', 'contact_center', 'agent_builder'], addons: ['gemini_ent'], subs: ['Manual + UiPath/Pega RPA'] },
+      p10:{ core: ['document_ai', 'contact_center', 'agent_builder'], addons: ['gemini_ent'], subs: ['Manual + RPA'] },
     },
   },
   {
-    id: 'bmw', name: 'BMW Group', industry: 'Automotive', hq: 'Munich',
+    id: 'auto-premium-oem', name: 'Premium Automotive OEM', industry: 'Automotive', hq: 'DACH',
     status: 'expansion',
-    footprint: 'Vertex AI in-vehicle foundation models; AWS-anchored data lake',
-    plAngle: 'Multi-cloud by policy — don’t fight AWS on the data lake. Take the AI/UX layer (Vertex), SAP migration and sustainability. A 2027 SAP assessment + AI factory pilot is a credible €10M+ services pursuit.',
+    footprint: 'In-vehicle foundation models on Vertex AI; AWS-anchored data lake',
+    plAngle: 'Multi-cloud by policy — don’t fight the incumbent on the data lake. Take the AI/UX layer (Vertex), SAP migration and sustainability. A SAP assessment plus an AI factory pilot is a credible large services pursuit.',
     pains: ['p2', 'p12', 'p6', 'p7'],
     stacks: {
-      p2: { core: ['vertex_ai', 'gemini_ent', 'auto_ai_agent', 'maps'], addons: ['speech', 'translation'], subs: ['AWS Bedrock + Alexa Auto'] },
+      p2: { core: ['vertex_ai', 'gemini_ent', 'auto_ai_agent', 'maps'], addons: ['speech', 'translation'], subs: ['AWS Bedrock + voice assistant'] },
       p12:{ core: ['mfg_data_engine', 'bigquery', 'vertex_vision'], addons: ['looker', 'anthos'], subs: ['AWS IoT + SiteWise'] },
       p6: { core: ['rise_sap', 'cortex', 'bigquery'], addons: ['gemini_sap'], subs: ['Azure for RISE'] },
-      p7: { core: ['bigquery', 'cortex', 'carbon_sense'], addons: ['looker'], subs: ['Manual Excel + Salesforce Net Zero'] },
+      p7: { core: ['bigquery', 'cortex', 'carbon_sense'], addons: ['looker'], subs: ['Manual Excel + Net Zero suite'] },
     },
   },
   {
-    id: 'mercedes', name: 'Mercedes-Benz Group', industry: 'Automotive', hq: 'Stuttgart',
+    id: 'auto-luxury-oem', name: 'Luxury Automotive OEM', industry: 'Automotive', hq: 'DACH',
     status: 'existing',
-    footprint: 'MBUX Automotive AI Agent on Gemini, Maps Platform',
-    plAngle: 'MBUX is the wedge. Push into dealer enablement (Workspace + Agentspace), aftermarket analytics and a sovereign data backplane for European driver data (Germany Data Boundary).',
+    footprint: 'In-vehicle AI assistant on Gemini; Maps Platform',
+    plAngle: 'The in-vehicle assistant is the wedge. Push into dealer enablement (Workspace + Agentspace), aftermarket analytics and a sovereign data backplane for European driver data.',
     pains: ['p2', 'p9', 'p3'],
     stacks: {
       p2: { core: ['vertex_ai', 'gemini_ent', 'auto_ai_agent', 'maps'], addons: ['document_ai', 'translation'], subs: ['OpenAI/Azure for voice'] },
@@ -360,46 +364,46 @@ export const CUSTOMERS = [
     },
   },
   {
-    id: 'volkswagen', name: 'Volkswagen Group', industry: 'Automotive', hq: 'Wolfsburg',
+    id: 'auto-volume-oem', name: 'Volume Automotive OEM', industry: 'Automotive', hq: 'DACH',
     status: 'expansion',
-    footprint: 'myVW Gemini app (US); core production on AWS Industrial Cloud',
-    plAngle: 'Don’t displace AWS on the factory floor. Win the digital/AI layer (myVW), then the SAP migration when 2027 forces a decision.',
+    footprint: 'Consumer AI app on Gemini; core production on AWS Industrial Cloud',
+    plAngle: 'Don’t displace the incumbent on the factory floor. Win the digital/AI layer first, then the SAP migration when the transformation deadline forces a decision.',
     pains: ['p2', 'p6', 'p8'],
     stacks: {
       p2: { core: ['vertex_ai', 'gemini_ent', 'pubsub', 'maps'], addons: ['auto_ai_agent'], subs: ['AWS Bedrock'] },
       p6: { core: ['rise_sap', 'cortex', 'bigquery'], addons: ['gemini_sap'], subs: ['Azure (M365 incumbent)'] },
-      p8: { core: ['gke', 'gemini_code'], addons: ['anthos'], subs: ['AWS DevOps + GitHub Copilot'] },
+      p8: { core: ['gke', 'gemini_code'], addons: ['anthos'], subs: ['AWS DevOps + code assistant'] },
     },
   },
   {
-    id: 'bayer', name: 'Bayer AG', industry: 'Pharma', hq: 'Leverkusen',
+    id: 'pharma-life-sciences', name: 'Life Sciences & Pharma Group', industry: 'Pharma', hq: 'DACH',
     status: 'existing', expansion: true,
     footprint: 'Radiology AI on Vertex AI',
-    plAngle: 'Radiology is the proof. Expand into drug discovery (DeepMind is unique to Google), crop-science geospatial and sovereign clinical-trial data.',
+    plAngle: 'Radiology is the proof. Expand into drug discovery (DeepMind is a unique differentiator), crop-science geospatial and sovereign clinical-trial data.',
     pains: ['p2', 'p6', 'p4'],
     stacks: {
-      p2: { core: ['vertex_ai', 'medlm', 'healthcare_de'], addons: ['vertex_search', 'document_ai'], subs: ['Microsoft Nuance + Azure Health'] },
+      p2: { core: ['vertex_ai', 'medlm', 'healthcare_de'], addons: ['vertex_search', 'document_ai'], subs: ['Clinical speech + Azure Health'] },
       p6: { core: ['rise_sap', 'cortex', 'bigquery'], addons: ['gemini_sap', 'agentspace'], subs: ['Azure RISE'] },
-      p4: { core: ['ai_hypercomputer', 'deepmind', 'bigquery'], addons: ['tsystems_sov'], subs: ['AWS HealthOmics + Nvidia BioNeMo'] },
+      p4: { core: ['ai_hypercomputer', 'deepmind', 'bigquery'], addons: ['tsystems_sov'], subs: ['AWS HealthOmics + GPU BioNeMo'] },
     },
   },
   {
-    id: 'basf', name: 'BASF', industry: 'Chemicals', hq: 'Ludwigshafen',
+    id: 'chem-global-chemicals', name: 'Global Chemicals Producer', industry: 'Chemicals', hq: 'DACH',
     status: 'existing', expansion: true,
     footprint: 'RISE with SAP S/4HANA transformation',
-    plAngle: 'The RISE migration is the largest open services pursuit in German chemicals. Lead with value services: assessment, landing zone, SAP migration, post-migration AI optimization.',
+    plAngle: 'The RISE migration is a large open services pursuit in chemicals. Lead with value services: assessment, landing zone, SAP migration, post-migration AI optimization.',
     pains: ['p6', 'p7', 'p2'],
     stacks: {
       p6: { core: ['rise_sap', 'bare_metal_hana', 'cortex'], addons: ['gemini_sap', 'bigquery'], subs: ['Azure RISE'] },
-      p7: { core: ['bigquery', 'cortex', 'carbon_sense'], addons: ['looker', 'earth_engine'], subs: ['Salesforce Net Zero'] },
-      p2: { core: ['vertex_ai', 'ai_hypercomputer', 'deepmind'], addons: ['agent_builder'], subs: ['AWS HPC + Nvidia'] },
+      p7: { core: ['bigquery', 'cortex', 'carbon_sense'], addons: ['looker', 'earth_engine'], subs: ['Net Zero suite'] },
+      p2: { core: ['vertex_ai', 'ai_hypercomputer', 'deepmind'], addons: ['agent_builder'], subs: ['AWS HPC + GPU'] },
     },
   },
   {
-    id: 'siemens', name: 'Siemens AG', industry: 'Industrial', hq: 'Munich',
+    id: 'industrial-conglomerate', name: 'Industrial Technology Conglomerate', industry: 'Industrial', hq: 'DACH',
     status: 'expansion',
-    footprint: 'AI manufacturing quality on GCP; Xcelerator on Azure',
-    plAngle: 'Azure-loyal for Xcelerator — don’t fight it. Sell BigQuery Omni as the analytics layer ACROSS Azure without forcing migration. Sustainability and SAP are secondary openings.',
+    footprint: 'AI manufacturing quality on GCP; digital platform on Azure',
+    plAngle: 'Azure-loyal for the digital platform — don’t fight it. Sell BigQuery Omni as the analytics layer ACROSS Azure without forcing migration. Sustainability and SAP are secondary openings.',
     pains: ['p12', 'p6', 'p5'],
     stacks: {
       p12:{ core: ['mfg_data_engine', 'vertex_vision', 'anthos'], addons: ['looker'], subs: ['Azure ML + IoT Hub'] },
@@ -408,10 +412,10 @@ export const CUSTOMERS = [
     },
   },
   {
-    id: 'lufthansa', name: 'Lufthansa Group', industry: 'Aviation', hq: 'Cologne',
+    id: 'aviation-flag-carrier', name: 'Flag-Carrier Airline Group', industry: 'Aviation', hq: 'DACH',
     status: 'existing', expansion: true,
-    footprint: 'Lufthansa Technik AVIATAR on BigQuery + GKE + Vertex AI',
-    plAngle: 'AVIATAR is the lighthouse. Expand AVIATAR-as-a-platform for other carriers, layer Gemini ops copilots, and modernize the SAP back-office.',
+    footprint: 'Aircraft-maintenance analytics platform on BigQuery + GKE + Vertex AI',
+    plAngle: 'The maintenance analytics platform is the lighthouse. Expand it as-a-platform for other carriers, layer Gemini ops copilots, and modernize the SAP back-office.',
     pains: ['p12', 'p5', 'p2'],
     stacks: {
       p12:{ core: ['bigquery', 'vertex_ai', 'pubsub', 'cloud_run'], addons: ['anthos'], subs: ['AWS IoT + SageMaker'] },
@@ -420,7 +424,7 @@ export const CUSTOMERS = [
     },
   },
   {
-    id: 'dhl', name: 'Deutsche Post DHL', industry: 'Logistics', hq: 'Bonn',
+    id: 'logistics-postal-group', name: 'Postal & Logistics Group', industry: 'Logistics', hq: 'DACH',
     status: 'existing', expansion: true,
     footprint: 'Apigee for API platform; logistics scale APIs',
     plAngle: 'API-led. Expand from Apigee to data + AI: a real-time logistics intelligence platform on BigQuery + Vertex AI with an Agentspace ops copilot.',
@@ -432,10 +436,10 @@ export const CUSTOMERS = [
     },
   },
   {
-    id: 'bosch', name: 'Bosch', industry: 'Industrial', hq: 'Stuttgart',
+    id: 'industrial-supplier', name: 'Industrial & Mobility Supplier', industry: 'Industrial', hq: 'DACH',
     status: 'existing', expansion: true,
     footprint: 'GKE for sustainability + IoT asset management',
-    plAngle: 'The canonical “Mittelstand-becomes-software” story. Pursue industrial AI platform expansion, sustainability reporting at scale, and a joint AI co-innovation lab.',
+    plAngle: 'The canonical “industrial-becomes-software” story. Pursue industrial AI platform expansion, sustainability reporting at scale, and a joint AI co-innovation lab.',
     pains: ['p12', 'p2', 'p7'],
     stacks: {
       p12:{ core: ['gke', 'pubsub', 'bigquery', 'vertex_ai'], addons: ['mfg_data_engine', 'anthos'], subs: ['AWS IoT + Greengrass'] },
@@ -444,10 +448,10 @@ export const CUSTOMERS = [
     },
   },
   {
-    id: 'schwarz', name: 'Schwarz Group (Lidl / Kaufland)', industry: 'Retail', hq: 'Neckarsulm',
+    id: 'retail-discount-group', name: 'Discount Retail Group', industry: 'Retail', hq: 'DACH',
     status: 'existing', expansion: true,
-    footprint: 'Workspace for 575K employees + STACKIT sovereign storage',
-    plAngle: 'The largest German Workspace win ever. Land-and-expand into data + AI: demand forecasting, retail search, sovereign analytics. STACKIT is the sovereign edge partner.',
+    footprint: 'Workspace for a very large workforce + sovereign storage partner',
+    plAngle: 'A landmark Workspace win. Land-and-expand into data + AI: demand forecasting, retail search, sovereign analytics with a sovereign edge partner.',
     pains: ['p9', 'p3', 'p13'],
     stacks: {
       p9: { core: ['workspace', 'gemini_ent'], addons: ['agentspace'], subs: ['Microsoft 365 + Copilot'] },
@@ -456,10 +460,10 @@ export const CUSTOMERS = [
     },
   },
   {
-    id: 'otto', name: 'Otto Group', industry: 'Retail', hq: 'Hamburg',
+    id: 'retail-ecommerce-group', name: 'E-Commerce Retail Group', industry: 'Retail', hq: 'DACH',
     status: 'existing', expansion: true,
     footprint: 'SAP on Google Cloud',
-    plAngle: 'Already trusts GCP for SAP. Push retail-specific AI (Vertex AI Search for Commerce), seller-experience copilot and unified marketplace analytics.',
+    plAngle: 'Already trusts GCP for SAP. Push retail-specific AI (Vertex AI Search for Commerce), a seller-experience copilot and unified marketplace analytics.',
     pains: ['p6', 'p13', 'p3'],
     stacks: {
       p6: { core: ['rise_sap', 'cortex', 'bigquery'], addons: ['gemini_sap'], subs: ['Azure RISE'] },
@@ -468,10 +472,10 @@ export const CUSTOMERS = [
     },
   },
   {
-    id: 'rewe', name: 'REWE Group', industry: 'Retail', hq: 'Cologne',
+    id: 'retail-grocery-coop', name: 'Grocery Retail Cooperative', industry: 'Retail', hq: 'DACH',
     status: 'existing', expansion: true,
-    footprint: 'REWE digital online grocery on GCP; SAP-on-GCP path',
-    plAngle: 'REWE digital is the wedge into the broader group. Pursue full-group SAP migration, a sovereign Workspace alternative to M365, and fulfillment AI.',
+    footprint: 'Online-grocery digital arm on GCP; SAP-on-GCP path',
+    plAngle: 'The digital arm is the wedge into the broader group. Pursue full-group SAP migration, a sovereign Workspace alternative to M365, and fulfillment AI.',
     pains: ['p13', 'p6', 'p12'],
     stacks: {
       p13:{ core: ['gke', 'bigtable', 'cloud_sql', 'bigquery', 'firebase'], addons: ['vertex_ai'], subs: ['AWS retail stack'] },
@@ -480,10 +484,10 @@ export const CUSTOMERS = [
     },
   },
   {
-    id: 'eon', name: 'E.ON', industry: 'Energy', hq: 'Essen',
+    id: 'energy-utility', name: 'Energy Utility Group', industry: 'Energy', hq: 'DACH',
     status: 'existing', expansion: true,
     footprint: 'Asset-management SaaS on BigQuery, Pub/Sub, GKE',
-    plAngle: 'Scale a B2B asset-management SaaS to 10,000 enterprise customers + Energiewende analytics.',
+    plAngle: 'Scale a B2B asset-management SaaS to thousands of enterprise customers plus energy-transition analytics.',
     pains: ['p13', 'p3', 'p7'],
     stacks: {
       p13:{ core: ['bigquery', 'gke', 'cloud_sql', 'pubsub'], addons: ['vertex_forecast'], subs: ['AWS IoT + Snowflake'] },
@@ -492,70 +496,70 @@ export const CUSTOMERS = [
     },
   },
   {
-    id: 'infineon', name: 'Infineon Technologies', industry: 'Semiconductors', hq: 'Munich',
+    id: 'semi-manufacturer', name: 'Semiconductor Manufacturer', industry: 'Semiconductors', hq: 'DACH',
     status: 'prospect',
     footprint: 'AWS + Azure for EDA, on-prem HPC',
-    plAngle: 'AlphaChip + TPU is the unique wedge no competitor can match. Lead there, follow with manufacturing analytics.',
+    plAngle: 'AI chip-design plus TPU is a unique wedge few competitors can match. Lead there, follow with manufacturing analytics.',
     pains: ['p2', 'p12', 'p4'],
     stacks: {
-      p2: { core: ['ai_hypercomputer', 'gke', 'bigquery'], addons: ['deepmind'], subs: ['AWS HPC + Nvidia'] },
-      p12:{ core: ['mfg_data_engine', 'vertex_vision', 'anthos'], addons: ['cortex'], subs: ['Azure ML + Siemens MindSphere'] },
+      p2: { core: ['ai_hypercomputer', 'gke', 'bigquery'], addons: ['deepmind'], subs: ['AWS HPC + GPU'] },
+      p12:{ core: ['mfg_data_engine', 'vertex_vision', 'anthos'], addons: ['cortex'], subs: ['Azure ML + industrial IoT'] },
       p4: { core: ['tsystems_sov', 'assured'], addons: ['eu_boundary'], subs: ['Azure Confidential'] },
     },
   },
   {
-    id: 'deutsche-boerse', name: 'Deutsche Börse Group', industry: 'Capital Markets', hq: 'Frankfurt',
+    id: 'capmkts-exchange', name: 'Securities Exchange Operator', industry: 'Capital Markets', hq: 'DACH',
     status: 'prospect',
-    footprint: 'Cautious cloud due to BaFin; mostly on-prem trading',
-    plAngle: 'Use Deutsche Bank’s GDC FX precedent as reference. T-Systems sovereign wrapper makes BaFin compliance defensible.',
+    footprint: 'Cautious cloud adoption due to regulation; mostly on-prem trading',
+    plAngle: 'Use a sovereign trading-infra precedent as reference. A sovereign wrapper makes regulator compliance defensible.',
     pains: ['p4', 'p3', 'p11'],
     stacks: {
       p4: { core: ['gdc', 'confidential', 'bigquery'], addons: ['vertex_ai', 'tsystems_sov'], subs: ['On-prem + Snowflake'] },
       p3: { core: ['bigquery', 'looker'], addons: ['agentspace'], subs: ['Snowflake + Databricks'] },
-      p11:{ core: ['vertex_ai', 'aml_ai', 'mandiant'], addons: ['chronicle'], subs: ['NICE Actimize + Microsoft Sentinel'] },
+      p11:{ core: ['vertex_ai', 'aml_ai', 'mandiant'], addons: ['chronicle'], subs: ['Market-surveillance suite + Sentinel'] },
     },
   },
   {
-    id: 'fresenius', name: 'Fresenius Group', industry: 'Healthcare', hq: 'Bad Homburg',
+    id: 'healthcare-provider', name: 'Healthcare & Dialysis Group', industry: 'Healthcare', hq: 'DACH',
     status: 'prospect',
     footprint: 'Azure + SAP-centric',
-    plAngle: 'Bayer radiology is the reference. Sovereign + MedLM + Healthcare Data Engine is a uniquely defensible stack.',
+    plAngle: 'Radiology AI is the reference pattern. Sovereign + MedLM + Healthcare Data Engine is a uniquely defensible stack.',
     pains: ['p2', 'p4', 'p6'],
     stacks: {
-      p2: { core: ['vertex_ai', 'medlm', 'healthcare_de'], addons: ['vertex_search'], subs: ['Microsoft Nuance + Azure Health'] },
+      p2: { core: ['vertex_ai', 'medlm', 'healthcare_de'], addons: ['vertex_search'], subs: ['Clinical speech + Azure Health'] },
       p4: { core: ['tsystems_sov', 'assured'], addons: ['eu_boundary'], subs: ['Azure Confidential'] },
       p6: { core: ['rise_sap', 'cortex'], addons: ['gemini_sap'], subs: ['Azure RISE'] },
     },
   },
   {
-    id: 'merck', name: 'Merck KGaA', industry: 'Pharma', hq: 'Darmstadt',
+    id: 'pharma-science-tech', name: 'Science & Technology Pharma', industry: 'Pharma', hq: 'DACH',
     status: 'prospect',
     footprint: 'Azure-anchored',
-    plAngle: 'DeepMind / AlphaFold is the unique angle into life sciences. Lead with research compute, follow with SAP.',
+    plAngle: 'Protein-folding / frontier science models are a unique angle into life sciences. Lead with research compute, follow with SAP.',
     pains: ['p2', 'p8', 'p6'],
     stacks: {
-      p2: { core: ['ai_hypercomputer', 'vertex_ai', 'deepmind'], addons: ['bigquery'], subs: ['AWS HealthOmics + Nvidia BioNeMo'] },
+      p2: { core: ['ai_hypercomputer', 'vertex_ai', 'deepmind'], addons: ['bigquery'], subs: ['AWS HealthOmics + GPU BioNeMo'] },
       p8: { core: ['vertex_ai', 'gke', 'bigquery'], addons: ['agent_builder'], subs: ['Azure ML + Databricks'] },
       p6: { core: ['rise_sap', 'cortex'], addons: ['gemini_sap'], subs: ['Azure RISE'] },
     },
   },
   {
-    id: 'deutsche-bahn', name: 'Deutsche Bahn', industry: 'Public Sector', hq: 'Berlin',
+    id: 'public-rail-operator', name: 'National Rail Operator', industry: 'Public Sector', hq: 'DACH',
     status: 'prospect',
-    footprint: 'Mixed, slow procurement',
-    plAngle: 'Predictive maintenance for rolling stock + passenger-facing AI + sovereign data.',
+    footprint: 'Mixed estate, slow procurement',
+    plAngle: 'Predictive maintenance for rolling stock plus passenger-facing AI plus sovereign data.',
     pains: ['p12', 'p2', 'p4'],
     stacks: {
-      p12:{ core: ['bigquery', 'vertex_ai', 'pubsub'], addons: ['mfg_data_engine'], subs: ['AWS IoT FleetWise + Siemens Mobility'] },
+      p12:{ core: ['bigquery', 'vertex_ai', 'pubsub'], addons: ['mfg_data_engine'], subs: ['AWS IoT FleetWise + rail mobility'] },
       p2: { core: ['vertex_ai', 'gemini_ent', 'maps'], addons: ['agent_builder'], subs: ['Azure OpenAI'] },
       p4: { core: ['tsystems_sov', 'assured'], addons: ['eu_boundary'], subs: ['Azure for Government'] },
     },
   },
   {
-    id: 'fed-gov', name: 'German Federal Government', industry: 'Public Sector', hq: 'Berlin',
+    id: 'public-federal-gov', name: 'Federal Government Agency', industry: 'Public Sector', hq: 'DACH',
     status: 'prospect',
-    footprint: 'Slow, BSI-sensitive, NIS2-delayed',
-    plAngle: 'The BSI cooperation agreement (Feb 2025) is the opener. Sovereign Workspace + Assured Workloads + Vertex AI with EU AI Act compliance.',
+    footprint: 'Regulation-sensitive, cautious cloud adoption',
+    plAngle: 'A national security-agency cooperation is the opener. Sovereign Workspace + Assured Workloads + Vertex AI with EU AI Act compliance.',
     pains: ['p4', 'p9', 'p14'],
     stacks: {
       p4: { core: ['tsystems_sov', 'assured', 'gdc'], addons: ['eu_boundary', 'bsi_c5'], subs: ['Microsoft 365 Government + Azure for Government'] },
@@ -580,24 +584,24 @@ export const REGULATED_INDUSTRIES = ['FSI', 'Insurance', 'Healthcare', 'Pharma',
 // ---------------------------------------------------------------------------
 export const PRESETS = [
   {
-    id: 'db-sovereign-genai',
-    name: 'Deutsche Bank — Sovereign GenAI',
+    id: 'fsi-sovereign-genai',
+    name: 'FSI — Sovereign GenAI',
     tag: 'FSI · Sovereign',
-    customerId: 'deutsche-bank', painId: 'p2',
+    customerId: 'fsi-global-bank', painId: 'p2',
     blocks: ['vertex_ai', 'gemini_ent', 'agentspace', 'bigquery', 'document_ai', 'assured', 'tsystems_sov'],
   },
   {
-    id: 'bmw-mfg-sap',
-    name: 'BMW — Manufacturing & SAP',
+    id: 'auto-mfg-sap',
+    name: 'Automotive — Manufacturing & SAP',
     tag: 'Automotive · SAP',
-    customerId: 'bmw', painId: 'p6',
+    customerId: 'auto-premium-oem', painId: 'p6',
     blocks: ['rise_sap', 'cortex', 'bigquery', 'gemini_sap', 'mfg_data_engine', 'vertex_vision'],
   },
   {
-    id: 'schwarz-retail-productivity',
-    name: 'Schwarz — Retail Productivity',
+    id: 'retail-productivity',
+    name: 'Retail — Workforce Productivity',
     tag: 'Retail · Sovereign',
-    customerId: 'schwarz', painId: 'p9',
+    customerId: 'retail-discount-group', painId: 'p9',
     blocks: ['workspace', 'gemini_ent', 'agentspace', 'bigquery', 'vertex_forecast'],
   },
 ];

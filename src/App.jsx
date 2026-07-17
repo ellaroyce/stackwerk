@@ -399,8 +399,9 @@ export default function App() {
         </button>
       </nav>
 
-      <footer className="footer-note">
-        Built from the supplied GCP solutions catalog and DACH mapping matrix — for pursuit enablement.
+      <footer className="footer-note" data-testid="footer-note">
+        <span data-testid="independence-disclaimer">Independent portfolio project. Not affiliated with or endorsed by Google LLC.</span>{' '}
+        <span data-testid="methodology-note">Based on OSINT and AI-assisted research.</span>
       </footer>
     </div>
   );
@@ -544,7 +545,8 @@ function BriefPanel({ customer, industry, pain, blocks, derived, health, activeS
     L.push(''); L.push('STAGED PURSUIT'); L.push('-'.repeat(42));
     phases.forEach((ph) => { L.push(`  ${ph.phase}`); L.push(`    ${ph.detail}`); });
     L.push(''); L.push('—'.repeat(21));
-    L.push('Built from the supplied GCP solutions catalog and DACH mapping matrix.');
+    L.push('Independent portfolio project. Not affiliated with or endorsed by Google LLC.');
+    L.push('Based on OSINT and AI-assisted research. Customer entries are generic archetypes, not real accounts.');
     return L.join('\n');
   }
 
