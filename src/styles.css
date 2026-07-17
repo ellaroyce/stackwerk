@@ -169,6 +169,11 @@ a:focus-visible, button:focus-visible, [tabindex]:focus-visible, input:focus-vis
 .search-wrap .search-input { padding-left: 32px; }
 
 .pick-list { display: flex; flex-direction: column; gap: 6px; }
+/* cap the customer/industry list so Step 2 stays visible in the first viewport */
+.scroll-list { max-height: 240px; overflow-y: auto; padding-right: 2px; margin-bottom: 2px; }
+.step2-head {
+  margin-top: 18px; padding-top: 16px; border-top: 1px solid var(--border);
+}
 .pick {
   text-align: left; border: 1px solid var(--border); background: var(--panel);
   border-radius: var(--r-md); padding: 9px 11px; transition: border-color .12s, background .12s, transform .08s;
@@ -379,6 +384,8 @@ a:focus-visible, button:focus-visible, [tabindex]:focus-visible, input:focus-vis
   .workspace {
     grid-template-columns: 1fr; grid-template-rows: auto;
   }
+  /* on mobile let the whole setup column scroll naturally */
+  .scroll-list { max-height: none; overflow: visible; }
   .col { display: none; }
   .col.active { display: flex; }
   .mobile-nav {

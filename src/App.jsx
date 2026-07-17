@@ -228,7 +228,7 @@ export default function App() {
             </div>
             <p className="col-hint">A named DACH account or a generic industry.</p>
           </div>
-          <div className="col-scroll">
+          <div className="col-scroll setup-scroll">
             <div className="seg" role="group" aria-label="Context mode">
               <button aria-pressed={mode === 'customer'} data-testid="tab-mode-customer"
                 onClick={() => { setMode('customer'); }}>Named customer</button>
@@ -244,7 +244,7 @@ export default function App() {
                     aria-label="Search customers" data-testid="input-customer-search"
                     value={custQuery} onChange={(e) => setCustQuery(e.target.value)} />
                 </div>
-                <div className="pick-list" data-testid="list-customers">
+                <div className="pick-list scroll-list" data-testid="list-customers">
                   {filteredCustomers.map((c) => (
                     <button key={c.id} className="pick" aria-pressed={customerId === c.id}
                       data-testid={`customer-${c.id}`} onClick={() => pickCustomer(c.id)}>
@@ -264,7 +264,7 @@ export default function App() {
             ) : (
               <>
                 <div className="field-label">Industry</div>
-                <div className="pick-list" data-testid="list-industries">
+                <div className="pick-list scroll-list" data-testid="list-industries">
                   {INDUSTRIES.map((ind) => (
                     <button key={ind} className="pick" aria-pressed={industry === ind}
                       data-testid={`industry-${ind}`} onClick={() => pickIndustry(ind)}>
@@ -279,7 +279,7 @@ export default function App() {
             )}
 
             {/* ---- Step 2: Pain ---- */}
-            <div className="col-head-row" style={{ marginTop: 20, marginBottom: 4 }}>
+            <div className="col-head-row step2-head">
               <span className={`step-badge ${painId ? 'done' : ''}`}>2</span>
               <span className="col-title">Choose pain point</span>
             </div>
