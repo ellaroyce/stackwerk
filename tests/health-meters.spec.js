@@ -95,5 +95,51 @@ for (const vp of [
     // Log observed state (mirrors the reported 33/40/50/100 shape) + screenshot.
     console.log(`[${vp.name}]`, meters.map((m) => `${m.k}=${m.pct}%:${m.fillW.toFixed(0)}px`).join(' '));
     await page.getByTestId('health-meters').screenshot({ path: `/tmp/health-${vp.name}.png` });
+
+    // ---- Representative 33/40/50/100 values through the real meter CSS ----
+    // Build bars with the production classes and assert each renders a distinct,
+    // nonzero fill width proportional to the track, with a fill color distinct
+    // from the track (blue < 100, lime at 100).
+    const rep = await page.evaluate(() => {
+      const PCTS = [33, 40, 50, 100];
+      const host = document.createElement('div');
+      host.style.cssText = 'position:fixed;left:0;top:0;width:300px';
+      document.body.appendChild(host);
+      const rows = PCTS.map((pct) => {
+        const track = document.createElement('span');
+        track.className = 'meter-track';
+        track.style.display = 'block';
+        const fill = document.createElement('span');
+        fill.className = 'meter-fill ' + (pct >= 100 ? 'lvl-full' : 'lvl-on');
+        fill.style.width = pct + '%';
+        track.appendChild(fill);
+        host.appendChild(track);
+        return { track, fill, pct };
+      });
+      const out = rows.map(({ track, fill, pct }) => ({
+        pct,
+        fillW: fill.getBoundingClientRect().width,
+        trackW: track.getBoundingClientRect().width,
+        fillBg: getComputedStyle(fill).backgroundColor,
+        trackBg: getComputedStyle(track).backgroundColor,
+      }));
+      host.remove();
+      return out;
+    });
+    console.log(`[${vp.name}] rep`, rep.map((r) => `${r.pct}%:${r.fillW.toFixed(0)}px`).join(' '));
+    for (const r of rep) {
+      expect(r.fillW, `${r.pct}% fill must be nonzero`).toBeGreaterThan(0);
+      expect(Math.abs(r.fillW - r.trackW * r.pct / 100),
+        `${r.pct}% fill width proportional to track`).toBeLessThanOrEqual(3);
+      expect(close(parseRGB(r.fillBg), parseRGB(r.trackBg)),
+        `${r.pct}% fill color distinct from track`).toBeFalsy();
+      expect(close(parseRGB(r.fillBg), r.pct >= 100 ? lime : accent),
+        `${r.pct}% fill uses ${r.pct >= 100 ? 'lime' : 'accent'}`).toBeTruthy();
+    }
+    // strictly increasing widths across 33 < 40 < 50 < 100
+    for (let i = 1; i < rep.length; i++) {
+      expect(rep[i].fillW, `${rep[i].pct}% wider than ${rep[i - 1].pct}%`)
+        .toBeGreaterThan(rep[i - 1].fillW + 1);
+    }
   });
 }
